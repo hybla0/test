@@ -31,7 +31,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a script
         run: |
-          wget http://ping.online.net/20Mo.dat
+          wget http://ping.online.net/50Mo.dat
           ls -l
           pwd
       
@@ -41,21 +41,20 @@ jobs:
           # Artifact name
           name: testfile
           # A file, directory or wildcard pattern that describes what to upload
-          path: 20Mo.dat
+          path: 50Mo.dat
           # The desired behavior if no files are found using the provided path.
       
-      - name: Release & Assets
-        env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: IPFS Setup Action
         # You may pin to the exact commit or the version.
-        # uses: Hs1r1us/Release-AIO@354b8db50d5b6310b621cb6c5e29d1f8e611aff7
-        uses: Hs1r1us/Release-AIO@v1.0
+        # uses: ibnesayeed/setup-ipfs@e183d0d2538b866dc30d8850883bd4cd4f8ab431
+        uses: ibnesayeed/setup-ipfs@0.6.0
         with:
-          # The name of the tag
-          tag_name: v1
-          # The name of the release
-          release_name: action_test
-          # Text describing the contents of the tag
-          body: release via action
-          # The path to the asset you want to upload
-          asset_files: 20Mo.dat
+          # Whether to start IPFS service daemon after installation and initialization
+          run_daemon: true
+      
+      - name: Test IPFS
+        shell: bash
+        run: |
+          ipfs cat /ipfs/bafybeifx7yeb55armcsxwwitkymga5xf53dxiarykms3ygqic223w5sk3m
+          cid=$(ipfs add -Q 50Mo.dat)
+          ipfs pin add $cid
