@@ -29,23 +29,17 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: Run a one-line script, use variables
-        run: echo Hello, $user!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Run a script
         run: |
-          echo ehi $user
-          echo $user $name
+          wget -O http://ping.online.net/10Mo.dat
+          ls -l
+          pwd
       
-      - name: reassign variable
-        run: echo "::set-env name=name::guru"
-        
-      - name: assign new variable
-        run: echo "::set-env name=nvar::newvalue"
-        
-      - name: see reassignment
-        run: |
-          echo ehi $user
-          echo $user $name
-          echo new var is $nvar
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          # Artifact name
+          name: testfile# optional, default is artifact
+          # A file, directory or wildcard pattern that describes what to upload
+          path: 10Mo.dat
+          # The desired behavior if no files are found using the provided path.
