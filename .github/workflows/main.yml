@@ -37,3 +37,15 @@ jobs:
         run: |
           echo ehi $user
           echo $user $name
+      
+      - name: reassign variable
+        run: echo "::set-env name=name::guru"
+        
+      - name: assign new variable
+        run: echo "::set-env name=nvar::newvalue"
+        
+      - name: see reassignment
+        run: |
+          echo ehi $user
+          echo $user $name
+          echo new var is $nvar
