@@ -44,7 +44,7 @@ jobs:
           echo --url http://127.0.0.1:5001/api/v0/dht/findprovs?arg=$cid >> tmpfile
           echo >> tmpfile
           done       
-          curl -X POST -K tmpfile -o output
+          curl -X POST -K tmpfile > output
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.4
