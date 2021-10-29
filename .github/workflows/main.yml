@@ -26,8 +26,6 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: Run a script
-        run: pwd
       
       - name: environment settings
         run: echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> $GITHUB_ENV
@@ -43,7 +41,7 @@ jobs:
         shell: bash
         run: |
           for cid in $(head testfile) ; do
-          echo 'http://127.0.0.1:5001/api/v0/dht/findprovs?arg='$cid
+          curl -o output -X POST 'http://127.0.0.1:5001/api/v0/dht/findprovs?arg='$cid
           done
 
       - name: Upload a Build Artifact
@@ -54,10 +52,3 @@ jobs:
           # A file, directory or wildcard pattern that describes what to upload
           path: output
           # The desired behavior if no files are found using the provided path.
-          
-      - name: speedest
-        shell: bash
-        run: |
-          wget -O speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py
-          chmod +x speedtest-cli
-          ./speedtest-cli
