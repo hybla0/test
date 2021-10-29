@@ -43,7 +43,7 @@ jobs:
         shell: bash
         run: |
           for cid in $(head testfile) ; do
-          curl -X POST "http://127.0.0.1:5001/api/v0/dht/findprovs?arg=$cid" > output
+          curl -X POST "http://127.0.0.1:5001/api/v0/dht/findprovs?arg="$cid > output
           done
 
       - name: Upload a Build Artifact
