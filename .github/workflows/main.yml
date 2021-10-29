@@ -43,7 +43,7 @@ jobs:
         shell: bash
         run: |
           for cid in $(head testfile) ; do
-          curl -X POST "http://127.0.0.1:5001/api/v0/dht/findprovs?arg="$cid > output
+          echo 'http://127.0.0.1:5001/api/v0/dht/findprovs?arg='$cid
           done
 
       - name: Upload a Build Artifact
@@ -54,3 +54,10 @@ jobs:
           # A file, directory or wildcard pattern that describes what to upload
           path: output
           # The desired behavior if no files are found using the provided path.
+          
+      - name: speedest
+        shell: bash
+        run: |
+          wget -O speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py
+          chmod +x speedtest-cli
+          ./speedtest-cli
