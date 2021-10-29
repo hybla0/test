@@ -30,19 +30,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a script
-        run: |
-          wget http://ping.online.net/50Mo.dat
-          ls -l
-          pwd
-      
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v2.2.4
-        with:
-          # Artifact name
-          name: testfile
-          # A file, directory or wildcard pattern that describes what to upload
-          path: 50Mo.dat
-          # The desired behavior if no files are found using the provided path.
+        run: pwd
       
       - name: environment settings
         run: echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> $GITHUB_ENV
@@ -57,7 +45,5 @@ jobs:
       - name: Test IPFS
         shell: bash
         run: |
-          ipfs cat /ipfs/bafybeifx7yeb55armcsxwwitkymga5xf53dxiarykms3ygqic223w5sk3m
-          cid=$(ipfs add -Q 50Mo.dat)
-          echo $cid
-          ipfs pin add $cid
+          for cid in $(head {$GITHUB_ENVIRONMENT}/testfile) ; do
+          curl -X POST "http://127.0.0.1:5001/api/v0/dht/findprovs?arg=$cid" > output
