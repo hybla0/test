@@ -1,9 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
 name: CI
-env:
-  user: "hybla"
-  name: "noob"
 
 # Controls when the workflow will run
 on:
@@ -45,5 +42,6 @@ jobs:
       - name: Test IPFS
         shell: bash
         run: |
-          for cid in $(head {$GITHUB_ENVIRONMENT}/testfile) ; do
+          for cid in $(head {$GITHUB_WORKSPACE}/testfile) ; do
           curl -X POST "http://127.0.0.1:5001/api/v0/dht/findprovs?arg=$cid" > output
+          done
