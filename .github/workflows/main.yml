@@ -4,15 +4,10 @@ name: CI
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
+  schedule:
+    - cron: '00 18 * * *'
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -29,14 +24,30 @@ jobs:
       
       - name: environment settings
         run: echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> $GITHUB_ENV
-      - name: upload
-        run: wget http://ping.online.net/500Mo.dat
-      - name: Test IPFS
+      - name: get
+        run: wget http://ping.online.net/200Mo.dat |
+          echo "SIZE=$( ls -lh 200Mo.dat | tr -s [:blank:] | cut -d ' ' -f5 )" >> $GITHUB_ENV
+      - name: ipfs upload
         uses: web3-storage/add-to-web3@v1
         id: web3
         with:
           web3_token: ${{ secrets.WEB3_STORAGE_TOKEN }}
-          path_to_add: '500Mo.dat'
+          path_to_add: '200Mo.dat'
       # "bafkreicysg23kiwv34eg2d7qweipxwosdo2py4ldv42nbauguluen5v6am"
-      - name: output
-        run: echo ${{ steps.web3.outputs.cid }}
+      - name: write output csv file
+        run: printf "%s,%s,%s\n" 200Mo.dat "$(date -I)" "${{ env.SIZE }}" >> output
+      - name: write cid output file
+        run: echo "${{ steps.web3.outputs.cid }}" >> cids
+      - name: setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<gh@gh.gh>"
+
+      - name: git add
+        run: git add -f output cids
+
+      - name: git commit
+        run: git commit -m "auto update at $(date)"
+
+      - name: git push
+        run: git push
