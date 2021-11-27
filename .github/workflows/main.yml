@@ -25,17 +25,17 @@ jobs:
       - name: environment settings
         run: echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> $GITHUB_ENV
       - name: get
-        run: wget http://ping.online.net/200Mo.dat |
-          echo "SIZE=$( ls -lh 200Mo.dat | tr -s [:blank:] | cut -d ' ' -f5 )" >> $GITHUB_ENV
+        run: wget http://ping.online.net/100Mo.dat |
+          echo "SIZE=$( ls -lh 100Mo.dat | tr -s [:blank:] | cut -d ' ' -f5 )" >> $GITHUB_ENV
       - name: ipfs upload
         uses: web3-storage/add-to-web3@v1
         id: web3
         with:
           web3_token: ${{ secrets.WEB3_STORAGE_TOKEN }}
-          path_to_add: '200Mo.dat'
+          path_to_add: '100Mo.dat'
       # "bafkreicysg23kiwv34eg2d7qweipxwosdo2py4ldv42nbauguluen5v6am"
       - name: write output csv file
-        run: printf "%s,%s,%s\n" 200Mo.dat "$(date -I)" "${{ env.SIZE }}" >> output
+        run: printf "%s,%s,%s\n" 100Mo.dat "$(date -I)" "${{ env.SIZE }}" >> output
       - name: write cid output file
         run: echo "${{ steps.web3.outputs.cid }}" >> cids
       - name: setup git config
