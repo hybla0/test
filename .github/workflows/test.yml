@@ -4,10 +4,6 @@ name: CX
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
-
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -31,8 +27,10 @@ jobs:
       run: |
         git config user.name "GitHub Actions Bot"
         git config user.email "<gh@gh.gh>"
+    - name: git pull
+      run: git pull
     - name: create test file
-      run: echo ciao > testf
+      run: echo ciao_$$ > testf
         
     - name: git add
       run: git add -f testf
