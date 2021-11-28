@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: CX
 
 # Controls when the workflow will run
 on:
@@ -29,7 +29,9 @@ jobs:
         run: echo Hello, world!
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          wget http://ping.online.net/10Mo.dat
-          printf "%s,%s,%s,%s\n" "10Mo.dat" "$(date -I)" "$( ls -lh 10Mo.dat | tr -s [:blank:] | cut -d ' ' -f5 )" CID
+      - name: setup py
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: run py script
+        run: py -c 'print("hi")'
