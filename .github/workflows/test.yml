@@ -26,3 +26,17 @@ jobs:
       with:
         python-version: '3.8' # Version range or exact version of a Python version to use, using SemVer's version range syntax
     - run: python hi.py
+    
+    - name: setup git config
+      run: |
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<gh@gh.gh>"
+    - name: create test file
+      run: echo ciao > testf
+        
+    - name: git add
+      run: git add -f testf
+    - name: git commit
+      run: git commit -m "auto update at $(date)"
+    - name: git push
+      run: git push
