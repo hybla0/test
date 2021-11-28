@@ -34,4 +34,4 @@ jobs:
         with:
           python-version: 3.8
       - name: run py script
-        run: py -c 'print("hi")'
+        run: py -c "print('hi')"
