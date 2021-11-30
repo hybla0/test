@@ -24,7 +24,7 @@ jobs:
       - name: environment settings
         run: echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> $GITHUB_ENV
       - name: get
-        run: wget http://ping.online.net/100Mo.dat |
+        run: wget http://ping.online.net/2Mo.dat |
           echo "SIZE=$( ls -lh 20Mo.dat | tr -s [:blank:] | cut -d ' ' -f5 )" >> $GITHUB_ENV
       - name: ipfs upload
         uses: web3-storage/add-to-web3@v1
