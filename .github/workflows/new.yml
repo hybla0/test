@@ -35,7 +35,7 @@ jobs:
         run: |
           while read url ; do
             wget -U "${{ env.UA }}" -O iso.iso "$url"
-          done
+          done < src
         
       - name: web3 compact upload
         uses: web3-storage/add-to-web3@v1
