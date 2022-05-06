@@ -34,7 +34,7 @@ jobs:
       - name: Run a multi-line script
         run: |
           while read url ; do
-            curl -K hdr -o iso.iso $url 
+            curl -L -K hdr -o iso.iso "$url" 
           done < src
         
       - name: web3 compact upload
