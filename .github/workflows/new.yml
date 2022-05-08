@@ -41,7 +41,8 @@ jobs:
           while read url ; do
             mkdir images
             cd images
-            curl -L -K hdr -o donotresist.jpg "$url"
-            go run ../examples/main.go
-            rm iso.iso
-          done < ../src
+            curl -L -o donotresist.jpg "$url"
+            cd ${GITHUB_WORKSPACE}/go-w3s-client/examples
+            go run /main.go
+            rm donotresist.jpg
+          done < ${GITHUB_WORKSPACE}/src
