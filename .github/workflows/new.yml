@@ -44,4 +44,4 @@ jobs:
             curl -L -K hdr -o donotresist.jpg "$url"
             go run ../examples/main.go
             rm iso.iso
-          done < src
+          done < ../src
