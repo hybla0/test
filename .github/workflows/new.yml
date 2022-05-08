@@ -40,6 +40,8 @@ jobs:
           git clone https://github.com/hybla0/go-w3s-client
           while read url ; do
             curl -L -o ${GITHUB_WORKSPACE}/iso.iso "$url"
+            cd go-w3s-client
             go run ${GITHUB_WORKSPACE}/go-w3s-client/example/main.go
+            cd ..
             rm ${GITHUB_WORKSPACE}/iso.iso
           done < ${GITHUB_WORKSPACE}/src
