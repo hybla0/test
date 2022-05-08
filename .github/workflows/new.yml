@@ -37,13 +37,11 @@ jobs:
         run: |
           go get github.com/web3-storage/go-w3s-client
           TOKEN=${{ secrets.WEB3_STORAGE_TOKEN }}
-          git clone https://github.com/web3-storage/go-w3s-client
+          git clone https://github.com/hybla0/go-w3s-client/example
           cd go-w3s-client
           while read url ; do
-            mkdir images
-            cd images
-            curl -L -o donotresist.jpg "$url"
+            curl -L -o ${GITHUB_WORKSPACE}/iso.iso "$url"
             cd ${GITHUB_WORKSPACE}/go-w3s-client/example
             go run ./main.go
-            rm donotresist.jpg
+            rm ${GITHUB_WORKSPACE}/iso.iso
           done < ${GITHUB_WORKSPACE}/src
