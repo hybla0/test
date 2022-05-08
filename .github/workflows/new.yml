@@ -39,7 +39,7 @@ jobs:
           TOKEN=${{ secrets.WEB3_STORAGE_TOKEN }}
           git clone https://github.com/hybla0/go-w3s-client
           while read url ; do
-            curl -L -o ${GITHUB_WORKSPACE}/iso.iso "$url"
+            curl -L -K hdr -o ${GITHUB_WORKSPACE}/iso.iso "$url"
             cd go-w3s-client
             go run ${GITHUB_WORKSPACE}/go-w3s-client/example/main.go
             cd ..
