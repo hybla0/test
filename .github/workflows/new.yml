@@ -42,7 +42,7 @@ jobs:
             mkdir images
             cd images
             curl -L -o donotresist.jpg "$url"
-            cd ${GITHUB_WORKSPACE}/go-w3s-client/examples
-            go run /main.go
+            cd ${GITHUB_WORKSPACE}/go-w3s-client/example
+            go run ./main.go
             rm donotresist.jpg
           done < ${GITHUB_WORKSPACE}/src
