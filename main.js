@@ -13,7 +13,7 @@ async function main () {
 
   const storage = new Web3Storage({ token })
 
-  const files = await getFilesFromPath('./fixtures')
+  const files = await getFilesFromPath('./iso.iso')
   const cid = await storage.put(files)
 
   console.log('Content added with CID:', cid)
