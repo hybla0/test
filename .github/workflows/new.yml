@@ -38,6 +38,6 @@ jobs:
           TOKEN=${{ secrets.WEB3_STORAGE_TOKEN }}
           while read url ; do
             curl -L -K hdr -o iso.iso "$url"
-            go run ./main.go
+            node ./main.js $TOKEN
             rm iso.iso
           done < src
