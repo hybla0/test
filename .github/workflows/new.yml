@@ -29,19 +29,20 @@ jobs:
       - name: Run a one-line script
         run: |
           echo "UA=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36" >> $GITHUB_ENV
-          echo "TOKEN=${{ secrets.WEB3_STORAGE_TOKEN }}" >> $GITHUB_ENV
+          echo "API_TOKEN=${{ secrets.WEB3_STORAGE_TOKEN }}" >> $GITHUB_ENV
           
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          go get github.com/web3-storage/go-w3s-client
-          TOKEN=${{ secrets.WEB3_STORAGE_TOKEN }}
-          git clone https://github.com/hybla0/go-w3s-client
+          API_TOKEN=${{ secrets.WEB3_STORAGE_TOKEN }}
+          mkdir test
+          mv ./main.js test/main.js
           while read url ; do
             curl -L -K hdr -o ${GITHUB_WORKSPACE}/iso.iso "$url"
-            cd go-w3s-client
-            go run ${GITHUB_WORKSPACE}/go-w3s-client/example/main.go
+            cd test
+            npm i web3.storage
+            node ${GITHUB_WORKSPACE}/main.js
             cd ..
             rm ${GITHUB_WORKSPACE}/iso.iso
           done < ${GITHUB_WORKSPACE}/src
