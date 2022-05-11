@@ -37,12 +37,12 @@ jobs:
         run: |
           API_TOKEN=${{ secrets.WEB3_STORAGE_TOKEN }}
           mkdir test
-          mv ./main.js test/main.js
+          mv ./store.mjs test/store.mjs
           while read url ; do
             curl -L -K hdr -o ${GITHUB_WORKSPACE}/iso.iso "$url"
             cd test
             npm i web3.storage
-            node main.js
+            node store.mjs
             cd ..
             rm ${GITHUB_WORKSPACE}/iso.iso
           done < ${GITHUB_WORKSPACE}/src
